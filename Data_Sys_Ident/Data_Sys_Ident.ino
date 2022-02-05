@@ -12,7 +12,7 @@
 
 
 // I am testing to see if updates show on Github
-// Testing changes w.out a commit message
+// Can I commit and push without (git add <file>)?
 
 void setup() {
   // put your setup code here, to run once:
