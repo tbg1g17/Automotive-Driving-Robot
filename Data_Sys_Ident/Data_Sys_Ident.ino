@@ -11,16 +11,37 @@
  */
 
 
-// I am testing to see if updates show on Github
-// Can I commit and push without (git add <file>)?
-//yes we can!!
+long pwm, V, start;
+int dir;
+
 
 void setup() {
   // put your setup code here, to run once:
+  
+  Serial.begin(9600);
+  randomSeed(24);
+  dir = 1;
+
+  start = millis();
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
+  if (millis() - start >= 500){
+    pwm = random(0, 256) * dir;
+//    dir = !dir; // change direction
+    dir *= -1;
+    start = millis();
+  }
+
+  Serial.print(millis());
+  Serial.print(", ");
+  Serial.println(pwm);
+
+  if (millis() >= 10000){
+    delay(10000);
+    
+  }
 }
