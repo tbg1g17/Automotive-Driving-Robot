@@ -24,8 +24,8 @@
 #define HALL_MAIN A1
 #define HALL_BACKUP A2
 #define VOLTAGE 5
-#define MAX_MAIN_VOLTAGE 3.24       //These values need to be found experimentally, they corrospond to the
-#define MIN_MAIN_VOLTAGE 0.79       //senseMain and senseBackup voltage when the pedal is fully depressed(MAX)
+#define MAX_MAIN_VOLTAGE 4.30       //These values need to be found experimentally, they corrospond to the
+#define MIN_MAIN_VOLTAGE 1.59       //senseMain and senseBackup voltage when the pedal is fully depressed(MAX)
 #define MAX_BACKUP_VOLTAGE 4.12     //and fully released(MIN).
 #define MIN_BACKUP_VOLTAGE 1.57
 
@@ -34,8 +34,8 @@ float senseMain, senseBackup, voltMain, voltBackup, percMain, percBackup;
 void setup() {
   Serial.begin(57600);
   
-  pinMode(HALL_MAIN, OUTPUT);
-  pinMode(HALL_BACKUP, OUTPUT);
+  pinMode(HALL_MAIN, INPUT);
+  pinMode(HALL_BACKUP, INPUT);
 }
 
 void loop() {
@@ -49,18 +49,18 @@ void loop() {
   voltBackup = senseBackup * (VOLTAGE/1024.0);
 
   //Express the hall effect reading as a throttle percentage
-  percMain = (voltMain - MIN_MAIN_VOLTAGE)/(MAX_MAIN_VOLTAGE - MIN_MAIN_VOLTAGE);
-  percBackup = (voltBackup - MIN_BACKUP_VOLTAGE)/(MAX_BACKUP_VOLTAGE - MIN_BACKUP_VOLTAGE);
+  percMain = ((voltMain - MIN_MAIN_VOLTAGE)/(MAX_MAIN_VOLTAGE - MIN_MAIN_VOLTAGE))*100;
+  percBackup = ((voltBackup - MIN_BACKUP_VOLTAGE)/(MAX_BACKUP_VOLTAGE - MIN_BACKUP_VOLTAGE))*100;
   
   // Printing the postitions for main and backup sensor
   Serial.print("Main Sensor  Analogue Reading:  ");
   Serial.print(senseMain);
-  Serial.print("Voltage Reading:  ");
+  Serial.print("  Voltage Reading:  ");
   Serial.print(voltMain);
-  Serial.print("Throttle Percentage:  ");
+  Serial.print("  Throttle Percentage:  ");
   Serial.print(percMain);
   Serial.println();
-
+  /*\
   Serial.print("Backup Sensor  Analogue Reading:  ");
   Serial.print(senseBackup);
   Serial.print("Voltage Reading:  ");
@@ -68,5 +68,6 @@ void loop() {
   Serial.print("Throttle Percentage:  ");
   Serial.print(percBackup);
   Serial.println();
+  */
 
 }
